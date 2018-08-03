@@ -8,6 +8,8 @@ import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+//playing around witht the twitter API
 @RestController
 public class TwitterOpsController
 {
@@ -23,6 +25,7 @@ public class TwitterOpsController
 
     }
 
+    //returns the twiiter user name
     @RequestMapping(value="screenName",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String getMyTwitterName()
     {
