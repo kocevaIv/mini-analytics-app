@@ -1,4 +1,4 @@
-package com.twitter.app.classes;
+package twitterapp.models;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,16 +11,24 @@ import java.util.Date;
 public class TweetDocument {
 
     private long id;
-    //the text from the twitter post
+    /**
+     * the text from the twitter post
+     */
     private String text;
 
-    //the userName that posted the tweet
+    /**
+     * the userName that posted the tweet
+     */
     private String fromUser;
 
-    //from where the tweet was posted: web client, mobile, instagram...
+    /**
+     * from where the tweet was posted: web client, mobile, instagram...
+     */
     private String source;
 
-    //the date when the tweet was created
+    /**
+     * the date when the tweet was created
+     */
     private Date createdAt;
 
 
@@ -71,7 +79,4 @@ public class TweetDocument {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-
-
 }

@@ -1,12 +1,12 @@
-package com.twitter.app;
+package twitterapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AppApplication {
+public class CrawlerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AppApplication.class, args);
+        SpringApplication.run(CrawlerApplication.class, args);
     }
 }
