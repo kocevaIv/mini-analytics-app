@@ -1,4 +1,4 @@
-package twitterapp.models;
+package common_services.models;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -78,5 +78,16 @@ public class TweetDocument {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "TweetDocument{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", fromUser='" + fromUser + '\'' +
+                ", source='" + source + '\'' +
+                ", createdAt=" + createdAt +
+                '}';
     }
 }

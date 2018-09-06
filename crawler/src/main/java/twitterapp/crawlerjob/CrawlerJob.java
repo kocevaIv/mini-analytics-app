@@ -1,21 +1,20 @@
-package twitterapp.controller;
+package twitterapp.crawlerjob;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.social.twitter.api.Tweet;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import twitterapp.services.TwitterService;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(TwitterController.TWITTER_BASE_URI)
-public class TwitterController {
+@Component
+public class CrawlerJob {
 
-    public static final String TWITTER_BASE_URI = "svc/v1/tweets";
 
     public static final String HASH_TAG = "burger";
 
@@ -23,7 +22,6 @@ public class TwitterController {
     private TwitterService twitterService;
 
     //gets tweets in JSON format and saves them to a database
-    @RequestMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @Scheduled(fixedDelay = 5000)
     public void getTweets() {
 

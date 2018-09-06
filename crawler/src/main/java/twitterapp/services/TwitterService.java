@@ -1,11 +1,11 @@
 package twitterapp.services;
 
+import common_services.models.TweetDocument;
+import common_services.repositories.MongoTwitterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.stereotype.Service;
-import twitterapp.models.TweetDocument;
-import twitterapp.repositories.MongoTwitterRepository;
 
 import java.util.List;
 

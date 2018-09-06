@@ -34,8 +34,12 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
+    <dependency>
+        <groupId>twitterapp</groupId>
+        <artifactId>common</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
