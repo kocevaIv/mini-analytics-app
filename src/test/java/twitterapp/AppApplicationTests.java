@@ -1,4 +1,4 @@
-package com.twitter.app;
+package twitterapp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
