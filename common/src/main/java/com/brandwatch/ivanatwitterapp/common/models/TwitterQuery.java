@@ -3,16 +3,16 @@ package com.brandwatch.ivanatwitterapp.common.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Queries")
+@Document(collection = "queries")
 public class TwitterQuery {
 
     @Id
     private long id;
 
-    private String hashTag;
+    private String hashtag;
 
-    public TwitterQuery(long id, String hashTag) {
-        this.hashTag = hashTag;
+    public TwitterQuery(long id, String hashtag) {
+        this.hashtag = hashtag;
         this.id = id;
     }
 
@@ -20,23 +20,23 @@ public class TwitterQuery {
         return id;
     }
 
-    public String getHashTag() {
-        return hashTag;
+    public String getHashtag() {
+        return hashtag;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setHashTag(String hashTag) {
-        this.hashTag = hashTag;
+    public void setHashtag(String hashtag) {
+        this.hashtag = hashtag;
     }
 
     @Override
     public String toString() {
         return "Query{" +
                 "id=" + id +
-                ", hashTag='" + hashTag + '\'' +
+                ", hashtag='" + hashtag + '\'' +
                 '}';
     }
 }

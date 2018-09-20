@@ -5,10 +5,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-
 //the annotation @Document marks this class as a type that can be stored in mongo db database using Sping data
 //we should specifiy the collection in the database where this document will be stored in
-@Document(collection = "CollectedTweets")
+@Document(collection = "mentions")
 public class Mention {
 
     @Id

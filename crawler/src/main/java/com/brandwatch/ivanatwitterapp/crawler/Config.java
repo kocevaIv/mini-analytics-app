@@ -22,6 +22,5 @@ public class Config {
 
         return new TwitterTemplate(appId, appSecret);
     }
-
 }
 

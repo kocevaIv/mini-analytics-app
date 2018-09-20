@@ -4,6 +4,7 @@ import com.brandwatch.ivanatwitterapp.api.services.QueryService;
 import com.brandwatch.ivanatwitterapp.api.services.MentionService;
 import com.brandwatch.ivanatwitterapp.api.utils.DateParser;
 import com.brandwatch.ivanatwitterapp.common.models.Mention;
+import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,31 +20,30 @@ public class ApiController {
     @Autowired
     private QueryService queryService;
 
-    @GetMapping("api/getDBTweets")
-    public List<Mention> getTweetsFromDB(@RequestParam int limit, @RequestParam String startDate, @RequestParam String endDate) {
+    @GetMapping("/mentions")
+    public List<Mention> getMentions(@RequestParam int limit, @RequestParam String startDate, @RequestParam String endDate) {
         LocalDateTime startDateISO = DateParser.parseDateTime(startDate);
         LocalDateTime endDateISO = DateParser.parseDateTime(endDate);
-        return mentionService.getTweets(limit, startDateISO, endDateISO);
+        return mentionService.getMentions(limit, startDateISO, endDateISO);
     }
 
-    @RequestMapping(value = "api/createQuery", method = RequestMethod.POST)
-    public void saveQuery(@RequestParam String hashTag) {
-        queryService.createQuery(hashTag);
+    @PostMapping("/queries")
+    public TwitterQuery saveQuery(@RequestParam String hashtag) {
+        return queryService.createQuery(hashtag);
     }
 
-    @RequestMapping(value = "api/getMentions/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/mentions/{id}")
     public List<Mention> getMentionsByQueryId(@PathVariable long id) {
         return mentionService.getMentionsByQueryId(id);
-
     }
 
-    @RequestMapping(value = "api/deleteQuery/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/queries/{id}")
     public boolean deleteQuery(@PathVariable long id) {
         return queryService.deleteQueryById(id);
     }
 
-    @RequestMapping(value = "api/updateQuery/{id}", method = RequestMethod.PATCH)
-    public boolean updateQuery(@PathVariable long id, @RequestParam String hashTag) {
-        return queryService.updateQueryForHashTag(id, hashTag);
+    @PatchMapping("/queries/{id}")
+    public boolean updateQuery(@PathVariable long id, @RequestParam String hashtag) {
+        return queryService.updateQueryForHashTag(id, hashtag);
     }
 }

@@ -6,19 +6,16 @@ import com.brandwatch.ivanatwitterapp.common.models.MentionID;
 import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
 import com.brandwatch.ivanatwitterapp.common.repositories.MongoMentionRepository;
 import com.brandwatch.ivanatwitterapp.common.repositories.MongoQueryRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.when;
@@ -38,9 +35,8 @@ public class MentionServiceTest {
     @Test(expected = QueryDoesNotExistException.class)
     public void givenQueryDoesNotExist_thenThrowException() {
         long queryId = 9;
-        when(mongoQueryRepository.getQueriesByID(anyLong())).thenReturn(null);
+        when(mongoQueryRepository.getQueryById(anyLong())).thenReturn(null);
         mentionService.getMentionsByQueryId(queryId);
-
     }
 
     @Test
@@ -48,9 +44,8 @@ public class MentionServiceTest {
         List<Mention> mentions = new ArrayList<Mention>();
         Mention mention = new Mention(new MentionID(2803083, 5), "", "", "", null);
         mentions.add(mention);
-        when(mongoQueryRepository.getQueriesByID(anyLong())).thenReturn(new TwitterQuery(5, "apple"));
-        when(mongoMentionRepository.getMentionsByQueryID(5)).thenReturn(mentions);
+        when(mongoQueryRepository.getQueryById(anyLong())).thenReturn(new TwitterQuery(5, "apple"));
+        when(mongoMentionRepository.getMentionsByQueryId(5)).thenReturn(mentions);
         assertEquals(mentions, mentionService.getMentionsByQueryId(5));
     }
-
 }

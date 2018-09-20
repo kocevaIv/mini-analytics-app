@@ -1,7 +1,7 @@
 package com.brandwatch.ivanatwitterapp.api.services;
 
-
 import com.brandwatch.ivanatwitterapp.api.exceptions.QueryDoesNotExistException;
+import com.brandwatch.ivanatwitterapp.api.repositories.SequenceIdRepository;
 import com.brandwatch.ivanatwitterapp.common.models.Mention;
 import com.brandwatch.ivanatwitterapp.common.repositories.MongoQueryRepository;
 import com.brandwatch.ivanatwitterapp.common.repositories.MongoMentionRepository;
@@ -21,16 +21,15 @@ public class MentionService {
     private MongoQueryRepository mongoQueryRepository;
 
     @Autowired
-    private SequenceIdService sequenceIdService;
+    private SequenceIdRepository sequenceIdRepository;
 
-    public List<Mention> getTweets(int limit, LocalDateTime startDate, LocalDateTime endDate) {
-        return mongoMentionRepository.readTweetsFromDB(limit, startDate, endDate);
+    public List<Mention> getMentions(int limit, LocalDateTime startDate, LocalDateTime endDate) {
+        return mongoMentionRepository.readMentions(limit, startDate, endDate);
     }
 
-
     public List<Mention> getMentionsByQueryId(long queryId) {
-        if (mongoQueryRepository.getQueriesByID(queryId) != null) {
-            return mongoMentionRepository.getMentionsByQueryID(queryId);
+        if (mongoQueryRepository.getQueryById(queryId) != null) {
+            return mongoMentionRepository.getMentionsByQueryId(queryId);
         } else {
             throw new QueryDoesNotExistException();
         }

@@ -17,7 +17,6 @@ public class QueryServiceTest {
     @Mock
     private MongoQueryRepository mongoQueryRepository;
 
-
     @Test(expected = EmptyHashTagException.class)
     public void givenHashTagIsEmpty_whenQueryIsCreated_thenThrowException() {
         String hashTag = "";
@@ -26,10 +25,8 @@ public class QueryServiceTest {
 
     @Test(expected = EmptyHashTagException.class)
     public void givenHashTagIsEmpty_whenQueryIsUpdated_thenThrowException() {
-        String hashTag = "";
+        String hashtag = "";
         long id = 10;
-        queryService.updateQueryForHashTag(id, hashTag);
+        queryService.updateQueryForHashTag(id, hashtag);
     }
-
-
 }

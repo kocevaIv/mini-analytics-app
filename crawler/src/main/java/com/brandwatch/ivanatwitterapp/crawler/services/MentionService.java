@@ -15,28 +15,22 @@ import java.util.List;
 @Service
 public class MentionService {
 
-    private static final Logger log = LoggerFactory.getLogger(MentionService.class);
-
     @Autowired
     private Twitter twitter;
 
     @Autowired
-    MongoMentionRepository twitterRepository;
+    private MongoMentionRepository twitterRepository;
 
-    public List<Tweet> getTweetsForHashtag(String hashTag) {
-
-        return twitter.searchOperations().search(hashTag, 20).getTweets();
-
+    public List<Tweet> getMentionsForHashtag(String hashtag) {
+        return twitter.searchOperations().search(hashtag, 20).getTweets();
     }
 
-    public void saveTweetsToDB(List<Tweet> tweets, long queryId) {
+    public void saveMentions(List<Tweet> tweets, long queryId) {
         //for each fetched tweet a new Mention is created and stored in the database
         for (Tweet tweet : tweets) {
             MentionID mentionID = new MentionID(tweet.getId(), queryId);
             Mention mention = new Mention(mentionID, tweet.getText(), tweet.getFromUser(), tweet.getSource(), tweet.getCreatedAt());
-            twitterRepository.saveTweetToDB(mention);
+            twitterRepository.saveMention(mention);
         }
     }
-
-
 }

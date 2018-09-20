@@ -8,13 +8,13 @@ public class CustomSequence {
 
     @Id
     private String id;
-    private int seq;
+    private int value;
 
     public String getId() {
         return id;
     }
 
-    public int getSeq() {
-        return seq;
+    public int getValue() {
+        return value;
     }
 }

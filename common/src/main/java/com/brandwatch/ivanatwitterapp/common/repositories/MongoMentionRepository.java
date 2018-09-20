@@ -15,41 +15,32 @@ import java.util.List;
 @Repository
 public class MongoMentionRepository implements MentionRepository {
 
-
-    private static Logger log = LoggerFactory.getLogger(MongoMentionRepository.class);
-
     @Autowired
     private MongoTemplate mongoTemplate;
 
-
     @Override
-    public void saveTweetToDB(Mention mention) {
+    public void saveMention(Mention mention) {
         mongoTemplate.save(mention);
     }
 
     @Override
-    public List<Mention> readTweetsFromDB(int limit, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Mention> readMentions(int limit, LocalDateTime startDate, LocalDateTime endDate) {
 
         Query query = new Query();
         query.limit(limit);
-
-        log.info("{},{},{}", startDate, endDate, limit);
         query.addCriteria(Criteria.where("createdAt").lt(endDate).gt(startDate));
         return mongoTemplate.find(query, Mention.class);
-
     }
 
     @Override
-    public List<Mention> getMentionsFromDB() {
+    public List<Mention> getMentions() {
         return mongoTemplate.findAll(Mention.class);
     }
 
     @Override
-    public List<Mention> getMentionsByQueryID(long QueryID) {
+    public List<Mention> getMentionsByQueryId(long queryId) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id.queryId").is(QueryID));
+        query.addCriteria(Criteria.where("_id.queryId").is(queryId));
         return mongoTemplate.find(query, Mention.class);
     }
-
-
 }

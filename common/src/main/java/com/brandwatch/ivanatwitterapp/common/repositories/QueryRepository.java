@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface QueryRepository {
 
-    void saveQueriesToDB(TwitterQuery query);
+    TwitterQuery saveQuery(TwitterQuery query);
 
-    List<TwitterQuery> getQueriesFromDB();
+    List<TwitterQuery> readQueries();
 
-    TwitterQuery getQueriesByID(long queryId);
+    TwitterQuery getQueryById(long queryId);
 
     boolean deleteQuery(long queryId);
 
-    boolean updateQuery(long queryId, String hashTag);
+    boolean updateQuery(long queryId, String hashtag);
 }

@@ -14,7 +14,7 @@ public class DateParserTest {
     @Test
     public void convertToLocalDate() {
         LocalDateTime localDateTime = LocalDateTime.of(2017, Month.JANUARY, 29, 0, 0);
-        Assert.assertEquals(localDateTime,DateParser.parseDateTime("2017-01-29"));
+        Assert.assertEquals(localDateTime, DateParser.parseDateTime("2017-01-29"));
     }
 
     @Test
@@ -27,11 +27,9 @@ public class DateParserTest {
     public void convertToLocalDateWithTimeAndZone() {
         LocalDateTime localDateTime = LocalDateTime.of(2017, Month.JANUARY, 29, 18, 55);
         ZoneId zoneId = ZoneId.of("UTC+0");
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime,zoneId);
-        Assert.assertEquals(zonedDateTime.toLocalDateTime(),DateParser.parseDateTime("2017-01-29T18:55Z"));
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, zoneId);
+        Assert.assertEquals(zonedDateTime.toLocalDateTime(), DateParser.parseDateTime("2017-01-29T18:55Z"));
     }
-
-
 
     @Test(expected = DateTimeParseException.class)
     public void whenDateStringIsInvalid_thenThrowException() {

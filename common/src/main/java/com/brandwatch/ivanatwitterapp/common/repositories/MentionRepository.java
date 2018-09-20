@@ -11,13 +11,12 @@ import java.util.List;
 
 public interface MentionRepository {
 
-    void saveTweetToDB(Mention mention);
+    void saveMention(Mention mention);
 
-    List<Mention> readTweetsFromDB(int limit, LocalDateTime startDate, LocalDateTime endDate);
+    List<Mention> readMentions(int limit, LocalDateTime startDate, LocalDateTime endDate);
 
+    List<Mention> getMentions();
 
-    List<Mention> getMentionsFromDB();
-
-    List<Mention> getMentionsByQueryID(long QueryID);
+    List<Mention> getMentionsByQueryId(long queryId);
 }
 

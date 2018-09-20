@@ -14,7 +14,6 @@ import java.util.List;
 @Component
 public class CrawlerJob {
 
-
     @Autowired
     private MentionService mentionService;
 
@@ -24,17 +23,11 @@ public class CrawlerJob {
     //gets tweets in JSON format and saves them to a database
     @Scheduled(fixedDelay = 5000)
     public void getTweets() {
-
         //loop through the saved queries
-        List<TwitterQuery> twitterQueries = twitterQueryService.getQueriesFromDB();
-        for (TwitterQuery query : twitterQueries
-        ) {
-            List<Tweet> tweets = mentionService.getTweetsForHashtag(query.getHashTag());
-            mentionService.saveTweetsToDB(tweets, query.getId());
+        List<TwitterQuery> twitterQueries = twitterQueryService.readQueries();
+        for (TwitterQuery query : twitterQueries) {
+            List<Tweet> tweets = mentionService.getMentionsForHashtag(query.getHashtag());
+            mentionService.saveMentions(tweets, query.getId());
         }
-
-
     }
-
-
 }

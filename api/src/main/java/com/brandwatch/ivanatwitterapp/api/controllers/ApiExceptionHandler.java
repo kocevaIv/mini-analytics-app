@@ -15,16 +15,13 @@ public class ApiExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody()
     public String noSuchQueryId(QueryDoesNotExistException e) {
-
-        return "Query id does not exist.Please enter a valid query id.";
+        return "Query id does not exist. Please enter a valid query id.";
     }
-
 
     @ExceptionHandler(EmptyHashTagException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ResponseBody()
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseBody
     public String emptyHashTagAsInput(EmptyHashTagException e) {
-        return "HashTag can not be empty!";
+        return "Hashtag can not be empty!";
     }
-
 }

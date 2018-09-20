@@ -20,42 +20,33 @@ public class MongoQueryRepository implements QueryRepository {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public void saveQueriesToDB(TwitterQuery query) {
+    public TwitterQuery saveQuery(TwitterQuery query) {
         mongoTemplate.save(query);
+        return query;
     }
 
     @Override
-    public List<TwitterQuery> getQueriesFromDB() {
+    public List<TwitterQuery> readQueries() {
         return mongoTemplate.findAll(TwitterQuery.class);
     }
 
     @Override
-    public TwitterQuery getQueriesByID(long QueryID) {
-        return mongoTemplate.findById(QueryID, TwitterQuery.class);
+    public TwitterQuery getQueryById(long queryId) {
+        return mongoTemplate.findById(queryId, TwitterQuery.class);
     }
 
     @Override
     public boolean deleteQuery(long queryId) {
-        Query query = new Query();
-        WriteResult writeResult = mongoTemplate.remove(query.addCriteria(where("id").is(queryId)), TwitterQuery.class);
-        if (writeResult.getN() != 0) {
-            return true;
-        } else {
-            return false;
-        }
-
-
+        Query query = new Query().addCriteria(where("id").is(queryId));
+        WriteResult writeResult = mongoTemplate.remove(query, TwitterQuery.class);
+        return writeResult.getN() != 0;
     }
 
     @Override
-    public boolean updateQuery(long queryId, String hashTag) {
+    public boolean updateQuery(long queryId, String hashtag) {
         Query query = new Query(where("id").is(queryId));
-        Update update = update("hashTag", hashTag);
+        Update update = update("hashtag", hashtag);
         WriteResult writeResult = mongoTemplate.updateFirst(query, update, TwitterQuery.class);
-        if (writeResult.getN() != 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return writeResult.getN() != 0;
     }
 }

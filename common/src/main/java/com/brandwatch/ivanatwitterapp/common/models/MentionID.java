@@ -20,6 +20,4 @@ public class MentionID {
     public long getQueryId() {
         return queryId;
     }
-
-
 }
