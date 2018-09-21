@@ -2,6 +2,7 @@ package com.brandwatch.ivanatwitterapp.common.repositories;
 
 import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
 import com.brandwatch.ivanatwitterapp.common.models.Mention;
+
 import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDate;
@@ -15,8 +16,6 @@ public interface MentionRepository {
 
     List<Mention> readMentions(int limit, LocalDateTime startDate, LocalDateTime endDate);
 
-    List<Mention> getMentions();
-
-    List<Mention> getMentionsByQueryId(long queryId);
+    List<Mention> findMentionsByQueryId(long queryId);
 }
 

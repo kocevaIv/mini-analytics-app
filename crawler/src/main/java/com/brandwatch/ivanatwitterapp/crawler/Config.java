@@ -12,10 +12,7 @@ import org.springframework.social.twitter.api.impl.TwitterTemplate;
 @Configuration
 @EnableScheduling
 public class Config {
-
-    @Autowired
-    private MongoMentionRepository repository;
-
+    
     @Bean
     public Twitter twitter(final @Value("${spring.social.twitter.appId}") String appId,
                            final @Value("${spring.social.twitter.appSecret}") String appSecret) {

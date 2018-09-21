@@ -21,7 +21,7 @@ public class MentionService {
     @Autowired
     private MongoMentionRepository twitterRepository;
 
-    public List<Tweet> getMentionsForHashtag(String hashtag) {
+    public List<Tweet> findMentionsForHashtag(String hashtag) {
         return twitter.searchOperations().search(hashtag, 20).getTweets();
     }
 
@@ -29,7 +29,9 @@ public class MentionService {
         //for each fetched tweet a new Mention is created and stored in the database
         for (Tweet tweet : tweets) {
             MentionID mentionID = new MentionID(tweet.getId(), queryId);
-            Mention mention = new Mention(mentionID, tweet.getText(), tweet.getFromUser(), tweet.getSource(), tweet.getCreatedAt());
+            Mention mention = new Mention(mentionID,
+                    tweet.getText(), tweet.getFromUser(),
+                    tweet.getSource(), tweet.getCreatedAt());
             twitterRepository.saveMention(mention);
         }
     }

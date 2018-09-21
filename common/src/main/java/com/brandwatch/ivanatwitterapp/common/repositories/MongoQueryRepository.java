@@ -31,7 +31,7 @@ public class MongoQueryRepository implements QueryRepository {
     }
 
     @Override
-    public TwitterQuery getQueryById(long queryId) {
+    public TwitterQuery findQueryById(long queryId) {
         return mongoTemplate.findById(queryId, TwitterQuery.class);
     }
 

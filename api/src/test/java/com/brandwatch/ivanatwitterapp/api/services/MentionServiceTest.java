@@ -35,7 +35,7 @@ public class MentionServiceTest {
     @Test(expected = QueryDoesNotExistException.class)
     public void givenQueryDoesNotExist_thenThrowException() {
         long queryId = 9;
-        when(mongoQueryRepository.getQueryById(anyLong())).thenReturn(null);
+        when(mongoQueryRepository.findQueryById(anyLong())).thenReturn(null);
         mentionService.getMentionsByQueryId(queryId);
     }
 
@@ -44,8 +44,8 @@ public class MentionServiceTest {
         List<Mention> mentions = new ArrayList<Mention>();
         Mention mention = new Mention(new MentionID(2803083, 5), "", "", "", null);
         mentions.add(mention);
-        when(mongoQueryRepository.getQueryById(anyLong())).thenReturn(new TwitterQuery(5, "apple"));
-        when(mongoMentionRepository.getMentionsByQueryId(5)).thenReturn(mentions);
+        when(mongoQueryRepository.findQueryById(anyLong())).thenReturn(new TwitterQuery(5, "apple"));
+        when(mongoMentionRepository.findMentionsByQueryId(5)).thenReturn(mentions);
         assertEquals(mentions, mentionService.getMentionsByQueryId(5));
     }
 }

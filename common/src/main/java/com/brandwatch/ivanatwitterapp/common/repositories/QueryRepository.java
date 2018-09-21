@@ -10,7 +10,7 @@ public interface QueryRepository {
 
     List<TwitterQuery> readQueries();
 
-    TwitterQuery getQueryById(long queryId);
+    TwitterQuery findQueryById(long queryId);
 
     boolean deleteQuery(long queryId);
 
