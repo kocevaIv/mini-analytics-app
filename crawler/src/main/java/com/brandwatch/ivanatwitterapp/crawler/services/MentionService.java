@@ -1,16 +1,15 @@
 package com.brandwatch.ivanatwitterapp.crawler.services;
 
-import com.brandwatch.ivanatwitterapp.common.models.Mention;
-import com.brandwatch.ivanatwitterapp.common.models.MentionID;
-import com.brandwatch.ivanatwitterapp.common.repositories.MongoMentionRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.brandwatch.ivanatwitterapp.common.models.Mention;
+import com.brandwatch.ivanatwitterapp.common.models.MentionID;
+import com.brandwatch.ivanatwitterapp.common.repositories.MongoMentionRepository;
 
 @Service
 public class MentionService {

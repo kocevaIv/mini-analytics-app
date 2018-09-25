@@ -1,18 +1,19 @@
 package com.brandwatch.ivanatwitterapp.common.repositories;
 
-import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
-import com.mongodb.WriteResult;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Update.update;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.mongodb.WriteResult;
 
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Update.update;
+import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
 
 @Repository
 public class MongoQueryRepository implements QueryRepository {
@@ -43,10 +44,10 @@ public class MongoQueryRepository implements QueryRepository {
     }
 
     @Override
-    public boolean updateQuery(long queryId, String hashtag) {
+    public TwitterQuery updateQuery(long queryId, String hashtag) {
         Query query = new Query(where("id").is(queryId));
         Update update = update("hashtag", hashtag);
         WriteResult writeResult = mongoTemplate.updateFirst(query, update, TwitterQuery.class);
-        return writeResult.getN() != 0;
+        return mongoTemplate.findById(queryId, TwitterQuery.class);
     }
 }

@@ -52,7 +52,7 @@ public class ApiController {
     }
 
     @PatchMapping("/queries/{id}")
-    public boolean updateQuery(@PathVariable long id, @RequestParam String hashtag) {
+    public TwitterQuery updateQuery(@PathVariable long id, @RequestParam String hashtag) {
         return queryService.updateQueryForHashTag(id, hashtag);
     }
 }

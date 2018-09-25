@@ -13,6 +13,9 @@ public class MentionID {
         this.queryId = queryId;
     }
 
+    public MentionID() {
+    }
+
     public long getId() {
         return id;
     }

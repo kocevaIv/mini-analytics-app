@@ -1,9 +1,9 @@
 package com.brandwatch.ivanatwitterapp.common.models;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
 
 //the annotation @Document marks this class as a type that can be stored in mongo db database using Sping data
 //we should specifiy the collection in the database where this document will be stored in
@@ -38,6 +38,9 @@ public class Mention {
         this.fromUser = fromUser;
         this.source = source;
         this.createdAt = createdAt;
+    }
+
+    public Mention() {
     }
 
     public MentionID getMentionId() {
