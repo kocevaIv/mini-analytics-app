@@ -25,7 +25,6 @@ import com.brandwatch.ivanatwitterapp.common.repositories.MentionRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test.properties")
-
 public class MentionIT {
 
     @LocalServerPort
@@ -55,11 +54,10 @@ public class MentionIT {
     @Test
     public void testReadMentions() throws IOException {
         String fullUrl = createURLWithPort() + "?limit=" + LIMIT
-                + "&startDate=" + START_DATE +
-                "&endDate=" + END_DATE;
+                + "&startDate=" + START_DATE
+                + "&endDate=" + END_DATE;
         String response = testRestTemplate.getForObject(fullUrl, String.class);
-        List<Mention> actualMentions = objectMapper.readValue(response, new TypeReference<List<Mention>>() {
-        });
+        List<Mention> actualMentions = objectMapper.readValue(response, new TypeReference<List<Mention>>() {});
         List<Mention> expectedMentions = mentionRepository.readMentions(LIMIT,
                 START_DATE,
                 END_DATE);

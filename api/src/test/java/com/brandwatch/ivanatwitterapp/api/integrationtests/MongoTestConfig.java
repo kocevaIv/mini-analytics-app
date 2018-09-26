@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class MongoTestConfig {
 
     @Bean(initMethod = "populateTestDatabase")
-    public DatabaseManager databaseManager() {
-        return new DatabaseManager();
+    public DatabaseFixtures databaseManager() {
+        return new DatabaseFixtures();
     }
 }

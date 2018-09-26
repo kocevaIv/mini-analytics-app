@@ -12,13 +12,13 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.brandwatch.ivanatwitterapp.api.ApiApplication;
@@ -47,12 +47,15 @@ public class QueryIT {
     private QueryRepository queryRepository;
 
     @Test
-    public void testCreateQuery() throws JsonProcessingException {
-        TwitterQuery twitterQuery = new TwitterQuery(0, HASHTAG);
-        String fullUrl = createURLWithPort() + "?hashtag=" + HASHTAG;
-        TwitterQuery actualQuery = testRestTemplate.postForObject(fullUrl,
-                objectMapper.writeValueAsString(twitterQuery), TwitterQuery.class);
-        Assert.assertEquals(twitterQuery.getHashtag(), actualQuery.getHashtag());
+    public void testCreateQuery() throws IOException {
+        final String requestBody = "hashtag=mcdonalds";
+        String url = createURLWithPort();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<String> entity = new HttpEntity(requestBody, headers);
+        String response = testRestTemplate.postForObject(url, entity, String.class);
+        TwitterQuery actualQuery = objectMapper.readValue(response, TwitterQuery.class);
+        Assert.assertEquals(HASHTAG, actualQuery.getHashtag());
     }
 
     @Test

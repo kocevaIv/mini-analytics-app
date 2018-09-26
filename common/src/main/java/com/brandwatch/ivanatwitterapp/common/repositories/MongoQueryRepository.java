@@ -47,7 +47,7 @@ public class MongoQueryRepository implements QueryRepository {
     public TwitterQuery updateQuery(long queryId, String hashtag) {
         Query query = new Query(where("id").is(queryId));
         Update update = update("hashtag", hashtag);
-        WriteResult writeResult = mongoTemplate.updateFirst(query, update, TwitterQuery.class);
+        mongoTemplate.updateFirst(query, update, TwitterQuery.class);
         return mongoTemplate.findById(queryId, TwitterQuery.class);
     }
 }

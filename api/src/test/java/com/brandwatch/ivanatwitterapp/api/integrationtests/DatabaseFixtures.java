@@ -13,7 +13,7 @@ import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
 import com.brandwatch.ivanatwitterapp.common.repositories.MentionRepository;
 import com.brandwatch.ivanatwitterapp.common.repositories.QueryRepository;
 
-public class DatabaseManager {
+public class DatabaseFixtures {
 
     @Autowired
     private MentionRepository mentionRepository;
@@ -21,28 +21,25 @@ public class DatabaseManager {
     @Autowired
     private QueryRepository queryRepository;
 
-    public DatabaseManager() {
-    }
-
     private void populateTestDatabase() throws ParseException {
-        TwitterQuery twitterQuery = new TwitterQuery(1, "brandwatch");
-        TwitterQuery anotherTwitterQuery = new TwitterQuery(2, "spotify");
-        queryRepository.saveQuery(twitterQuery);
-        queryRepository.saveQuery(anotherTwitterQuery);
+        TwitterQuery twitterQuery1 = new TwitterQuery(1, "brandwatch");
+        TwitterQuery twitterQuery2 = new TwitterQuery(2, "spotify");
+        queryRepository.saveQuery(twitterQuery1);
+        queryRepository.saveQuery(twitterQuery2);
         DateFormat isoFormat = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-        Mention mentionNo1 = new Mention(new MentionID(37294979,
-                twitterQuery.getId()),
+        Mention mention1 = new Mention(new MentionID(37294979,
+                twitterQuery1.getId()),
                 "Some random tweeted text",
                 "Dummy user",
                 "web client",
                 isoFormat.parse("2018-09-23"));
-        Mention mentionNo2 = new Mention(new MentionID(37294978,
-                twitterQuery.getId()),
+        Mention mention2 = new Mention(new MentionID(37294978,
+                twitterQuery1.getId()),
                 "Some random tweeted text",
                 "Dummy user",
                 "web client",
                 isoFormat.parse("2018-09-22"));
-        mentionRepository.saveMention(mentionNo1);
-        mentionRepository.saveMention(mentionNo2);
+        mentionRepository.saveMention(mention1);
+        mentionRepository.saveMention(mention2);
     }
 }
