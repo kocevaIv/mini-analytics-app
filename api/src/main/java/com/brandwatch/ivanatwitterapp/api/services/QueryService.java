@@ -36,7 +36,7 @@ public class QueryService {
         return mongoQueryRepository.deleteQuery(queryId);
     }
 
-    public boolean updateQueryForHashTag(long queryId, String hashtag) {
+    public TwitterQuery updateQueryForHashTag(long queryId, String hashtag) {
         if (StringUtils.isNotBlank(hashtag)) {
             return mongoQueryRepository.updateQuery(queryId, hashtag);
         } else {

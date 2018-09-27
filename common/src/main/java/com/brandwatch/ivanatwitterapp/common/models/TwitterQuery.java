@@ -16,6 +16,9 @@ public class TwitterQuery {
         this.id = id;
     }
 
+    public TwitterQuery() {
+    }
+
     public long getId() {
         return id;
     }

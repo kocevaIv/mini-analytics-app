@@ -1,8 +1,8 @@
 package com.brandwatch.ivanatwitterapp.common.repositories;
 
-import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
-
 import java.util.List;
+
+import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
 
 public interface QueryRepository {
 
@@ -14,5 +14,5 @@ public interface QueryRepository {
 
     boolean deleteQuery(long queryId);
 
-    boolean updateQuery(long queryId, String hashtag);
+    TwitterQuery updateQuery(long queryId, String hashtag);
 }
