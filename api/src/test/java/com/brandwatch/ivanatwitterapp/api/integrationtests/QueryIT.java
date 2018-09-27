@@ -3,6 +3,7 @@ package com.brandwatch.ivanatwitterapp.api.integrationtests;
 import java.io.IOException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,13 @@ public class QueryIT {
     @Autowired
     private QueryRepository queryRepository;
 
+    @Before
+    public void init(){
+        RestTemplate restTemplate = testRestTemplate.getRestTemplate();
+        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+        restTemplate.setRequestFactory(httpRequestFactory);
+    }
+
     @Test
     public void testCreateQuery() throws IOException {
         final String requestBody = "hashtag=mcdonalds";
@@ -74,11 +82,8 @@ public class QueryIT {
         long queryId = 2;
         TwitterQuery expectedTwitterQuery = new TwitterQuery(queryId, UPDATED_HASHTAG);
         String fullUrl = createURLWithPort() + "/" + queryId + "?hashtag=" + UPDATED_HASHTAG;
-        RestTemplate restTemplate = new RestTemplate();
-        HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-        restTemplate.setRequestFactory(httpRequestFactory);
         HttpEntity<String> entity = new HttpEntity<String>(null, new HttpHeaders());
-        ResponseEntity<String> response = restTemplate.exchange(fullUrl, HttpMethod.PATCH, entity, String.class);
+        ResponseEntity<String> response = testRestTemplate.exchange(fullUrl, HttpMethod.PATCH, entity, String.class);
         TwitterQuery actualTwitterQuery = objectMapper.readValue(response.getBody(), TwitterQuery.class);
         Assert.assertEquals(expectedTwitterQuery.getHashtag(), actualTwitterQuery.getHashtag());
     }
