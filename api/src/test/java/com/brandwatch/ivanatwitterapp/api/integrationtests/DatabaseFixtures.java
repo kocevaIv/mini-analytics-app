@@ -10,16 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.brandwatch.ivanatwitterapp.common.models.Mention;
 import com.brandwatch.ivanatwitterapp.common.models.MentionID;
 import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
-import com.brandwatch.ivanatwitterapp.common.repositories.MentionRepository;
-import com.brandwatch.ivanatwitterapp.common.repositories.QueryRepository;
+import com.brandwatch.ivanatwitterapp.common.repositories.MongoMentionRepository;
+import com.brandwatch.ivanatwitterapp.common.repositories.MongoQueryRepository;
 
 public class DatabaseFixtures {
 
     @Autowired
-    private MentionRepository mentionRepository;
+    private MongoMentionRepository mentionRepository;
 
     @Autowired
-    private QueryRepository queryRepository;
+    private MongoQueryRepository queryRepository;
 
     private void populateTestDatabase() throws ParseException {
         TwitterQuery twitterQuery1 = new TwitterQuery(1, "brandwatch");
