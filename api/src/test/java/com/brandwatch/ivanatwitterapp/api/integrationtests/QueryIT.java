@@ -27,7 +27,7 @@ import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
 import com.brandwatch.ivanatwitterapp.common.repositories.QueryRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {ApiApplication.class,MongoTestConfig.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test.properties")
 public class QueryIT {
 

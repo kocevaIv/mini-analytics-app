@@ -12,9 +12,6 @@ import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.configuration.ShutdownStrategy;
 import com.palantir.docker.compose.connection.DockerPort;
 
-import com.brandwatch.ivanatwitterapp.common.repositories.MongoMentionRepository;
-import com.brandwatch.ivanatwitterapp.common.repositories.MongoQueryRepository;
-
 @Configuration
 public class MongoTestConfig extends AbstractMongoConfiguration {
 
@@ -23,32 +20,14 @@ public class MongoTestConfig extends AbstractMongoConfiguration {
         return new DatabaseFixtures();
     }
 
-
-
-    @Bean(destroyMethod = "after")
+    @Bean(initMethod = "before", destroyMethod = "after")
     public DockerComposeRule dockerComposeRule() throws IOException, InterruptedException {
         DockerComposeRule dockerComposeRule = DockerComposeRule.builder()
                 .file("src/test/resources/docker-compose.yml")
                 .shutdownStrategy(ShutdownStrategy.GRACEFUL)
                 .build();
-          dockerComposeRule.before();
-          return dockerComposeRule;
+        return dockerComposeRule;
     }
-
-
-
-   /* @Bean
-    public MongoDbFactory mongoDbFactory(DockerComposeRule docker) throws Exception {
-
-        return new SimpleMongoDbFactory(mongoClient, "testTweets");
-    }
-
-    public @Bean
-    MongoTemplate mongoTemplate(MongoDbFactory factory) throws Exception {
-
-        MongoTemplate mongoTemplate = new MongoTemplate(factory);
-        return mongoTemplate;
-    }*/
 
     @Override
     protected String getDatabaseName() {
@@ -59,16 +38,6 @@ public class MongoTestConfig extends AbstractMongoConfiguration {
     @Bean
     public Mongo mongo() throws Exception {
         DockerPort port = dockerComposeRule().containers().container("mongo").port(27017);
-        return  new MongoClient("localhost",port.getExternalPort());
+        return new MongoClient("localhost", port.getExternalPort());
     }
-
-    @Bean
-    public MongoMentionRepository mongoMentionRepository(){
-        return new MongoMentionRepository();
-    }
-    @Bean
-    public MongoQueryRepository mongoQueryRepository(){
-        return new MongoQueryRepository();
-    }
-
 }
