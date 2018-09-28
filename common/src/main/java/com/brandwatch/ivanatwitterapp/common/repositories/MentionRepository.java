@@ -1,14 +1,9 @@
 package com.brandwatch.ivanatwitterapp.common.repositories;
 
-import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
-import com.brandwatch.ivanatwitterapp.common.models.Mention;
-
-import org.apache.tomcat.jni.Local;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.List;
+
+import com.brandwatch.ivanatwitterapp.common.models.Mention;
 
 public interface MentionRepository {
 
