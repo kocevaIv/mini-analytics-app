@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.configuration.ShutdownStrategy;
@@ -34,10 +33,16 @@ public class MongoTestConfig extends AbstractMongoConfiguration {
         return "testTweets";
     }
 
+
     @Override
     @Bean
-    public Mongo mongo() throws Exception {
-        DockerPort port = dockerComposeRule().containers().container("mongo").port(27017);
+    public MongoClient mongoClient() {
+        DockerPort port = null;
+        try {
+            port = dockerComposeRule().containers().container("mongo").port(27017);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return new MongoClient("localhost", port.getExternalPort());
     }
 }
