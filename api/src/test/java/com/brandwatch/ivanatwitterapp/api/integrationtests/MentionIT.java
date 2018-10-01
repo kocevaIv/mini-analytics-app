@@ -9,9 +9,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,7 +23,7 @@ import com.brandwatch.ivanatwitterapp.common.models.Mention;
 import com.brandwatch.ivanatwitterapp.common.repositories.MentionRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {ApiApplication.class, MongoTestConfig.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:test.properties")
 public class MentionIT {
 
@@ -57,10 +57,12 @@ public class MentionIT {
                 + "&startDate=" + START_DATE
                 + "&endDate=" + END_DATE;
         String response = testRestTemplate.getForObject(fullUrl, String.class);
-        List<Mention> actualMentions = objectMapper.readValue(response, new TypeReference<List<Mention>>() {});
+        List<Mention> actualMentions = objectMapper.readValue(response, new TypeReference<List<Mention>>() {
+        });
         List<Mention> expectedMentions = mentionRepository.readMentions(LIMIT,
                 START_DATE,
                 END_DATE);
+        Assert.assertNotEquals("No mentions in database", 0, expectedMentions.size());
         Assert.assertEquals(expectedMentions, actualMentions);
     }
 

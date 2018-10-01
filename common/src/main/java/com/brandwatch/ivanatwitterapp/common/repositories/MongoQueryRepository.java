@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-import com.mongodb.WriteResult;
+import com.mongodb.client.result.DeleteResult;
 
 import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
 
@@ -39,8 +39,8 @@ public class MongoQueryRepository implements QueryRepository {
     @Override
     public boolean deleteQuery(long queryId) {
         Query query = new Query().addCriteria(where("id").is(queryId));
-        WriteResult writeResult = mongoTemplate.remove(query, TwitterQuery.class);
-        return writeResult.getN() != 0;
+        DeleteResult deleteResult = mongoTemplate.remove(query, TwitterQuery.class);
+        return deleteResult.getDeletedCount() != 0;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.brandwatch.ivanatwitterapp.common.models;
 
 import java.util.Date;
+import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -41,6 +42,18 @@ public class Mention {
     }
 
     public Mention() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mention mention = (Mention) o;
+        return Objects.equals(mentionId.getQueryId(), mention.mentionId.getQueryId()) &&
+                Objects.equals(text, mention.text) &&
+                Objects.equals(fromUser, mention.fromUser) &&
+                Objects.equals(source, mention.source) &&
+                Objects.equals(createdAt, mention.createdAt);
     }
 
     public MentionID getMentionId() {
