@@ -33,7 +33,6 @@ public class MongoTestConfig extends AbstractMongoConfiguration {
         return "testTweets";
     }
 
-
     @Override
     @Bean
     public MongoClient mongoClient() {
