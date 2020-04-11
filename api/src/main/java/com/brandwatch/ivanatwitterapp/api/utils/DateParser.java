@@ -1,5 +1,8 @@
 package com.brandwatch.ivanatwitterapp.api.utils;
 
+import static java.time.temporal.ChronoField.DAY_OF_MONTH;
+import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -8,13 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
-import static java.time.temporal.ChronoField.DAY_OF_MONTH;
-import static java.time.temporal.ChronoField.MONTH_OF_YEAR;
-
+@Deprecated
 public class DateParser {
     private static final DateTimeFormatter DATE_TIME_FORMATTER
             = new DateTimeFormatterBuilder()

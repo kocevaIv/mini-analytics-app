@@ -1,14 +1,14 @@
 package com.brandwatch.ivanatwitterapp.api.utils;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.time.*;
-import java.time.format.DateTimeParseException;
-import java.util.Date;
-
-import static org.junit.Assert.*;
-
+@Deprecated
 public class DateParserTest {
 
     @Test

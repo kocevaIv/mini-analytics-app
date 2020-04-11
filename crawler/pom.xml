@@ -22,21 +22,22 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-twitter -->
+        <!--spring-social is out of life, twitter4j is a java library for accessing Twitter API -->
         <dependency>
-            <groupId>org.springframework.social</groupId>
-            <artifactId>spring-social-twitter</artifactId>
-            <version>1.1.2.RELEASE</version>
+        <groupId>org.twitter4j</groupId>
+        <artifactId>twitter4j-core</artifactId>
+            <version>4.0.6</version>
         </dependency>
 
+        <!--twitter4j stream API -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-stream</artifactId>
+            <version>4.0.7</version>
         </dependency>
-
     <dependency>
         <groupId>twitterapp</groupId>
-        <artifactId>common</artifactId>
+        <artifactId>mentions-storage</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </dependency>
     </dependencies>

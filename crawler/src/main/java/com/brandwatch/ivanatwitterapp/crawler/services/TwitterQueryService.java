@@ -1,19 +1,30 @@
 package com.brandwatch.ivanatwitterapp.crawler.services;
 
-import com.brandwatch.ivanatwitterapp.common.models.TwitterQuery;
-import com.brandwatch.ivanatwitterapp.common.repositories.MongoQueryRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.brandwatch.ivanatwitterapp.common.models.Query;
+import com.brandwatch.ivanatwitterapp.common.repositories.QueryRepository;
 
 @Service
 public class TwitterQueryService {
 
-    @Autowired
-    private MongoQueryRepository mongoQueryRepository;
+//    @Autowired
+//    private MentionRepository mentionRepository;
+//
+//    public List<Query> readQueries() {
+//        return mentionRepository.readQueries();
+//    }
 
-    public List<TwitterQuery> readQueries() {
-        return mongoQueryRepository.readQueries();
+    @Autowired
+    QueryRepository queryRepository;
+
+
+
+    public List<Query> readQueries(){
+
+    return queryRepository.readQueries();
     }
 }
