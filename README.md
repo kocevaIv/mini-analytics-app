@@ -6,8 +6,8 @@ A spring boot app that crawls data from twitter in two ways:
 Afterwards, the crawled tweets are being sent to a kafka topic and stored in solr database.
 The user defined queries are stored independently in postgres.
 
-##Installation
+## Installation
 
-##Configuration
+## Configuration
 
-##Using the API
+## Using the API
