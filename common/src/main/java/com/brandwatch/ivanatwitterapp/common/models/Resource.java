@@ -17,6 +17,10 @@ public class Resource {
 
     private String source;
 
+    public Resource(){
+
+    }
+
     private Resource(long resourceId, String text, String author, Instant createdAt, String source) {
         this.resourceId = resourceId;
         this.text = text;

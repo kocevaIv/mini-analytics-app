@@ -10,6 +10,7 @@ import twitter4j.TwitterException;
 
 import com.brandwatch.ivanatwitterapp.common.models.Resource;
 import com.brandwatch.ivanatwitterapp.common.models.Query;
+import com.brandwatch.ivanatwitterapp.crawler.kafka.Producer;
 import com.brandwatch.ivanatwitterapp.crawler.services.MentionService;
 import com.brandwatch.ivanatwitterapp.crawler.services.TwitterQueryService;
 
@@ -22,6 +23,9 @@ public class CrawlerJob {
     @Autowired
     private TwitterQueryService twitterQueryService;
 
+    @Autowired
+    private Producer producer;
+
     //gets tweets in JSON format and saves them to a kafka topic
     @Scheduled(fixedDelay = 5000)
     public void getTweets() throws TwitterException {
@@ -30,6 +34,8 @@ public class CrawlerJob {
         List<Query> twitterQueries = twitterQueryService.readQueries();
         for (Query query : twitterQueries) {
           List<Resource> resources = mentionService.findResourcesForHashTag(query.getQueryDefinition());
+          //send resources to kafka topic
+          resources.forEach(producer::send);
           mentionService.saveMentions(resources, query.getId());
         }
     }
