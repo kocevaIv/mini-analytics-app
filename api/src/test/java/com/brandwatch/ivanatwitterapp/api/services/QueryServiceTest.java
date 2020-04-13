@@ -1,12 +1,13 @@
 package com.brandwatch.ivanatwitterapp.api.services;
 
-import com.brandwatch.ivanatwitterapp.api.exceptions.EmptyHashTagException;
-import com.brandwatch.ivanatwitterapp.common.repositories.MongoQueryRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import com.brandwatch.ivanatwitterapp.api.exceptions.EmptyHashTagException;
+import com.brandwatch.ivanatwitterapp.common.repositories.MongoQueryRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QueryServiceTest {
