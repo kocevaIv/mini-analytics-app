@@ -15,10 +15,11 @@ import twitter4j.TwitterException;
 
 import com.brandwatch.ivanatwitterapp.common.models.Mention;
 import com.brandwatch.ivanatwitterapp.common.models.Resource;
+import com.brandwatch.ivanatwitterapp.common.repositories.QueryRepository;
 import com.brandwatch.ivanatwitterapp.mentionstorage.repository.MentionRepository;
 
 @Service
-public class MentionService {
+public class CrawlerService {
 
     @Autowired
     private Twitter twitter;
@@ -26,15 +27,13 @@ public class MentionService {
     @Autowired
     private MentionRepository mentionRepository;
 
-
-//    public List<Tweet> findMentionsForHashtag(String hashtag) {
-//        return twitter.searchOperations().search(hashtag, 20).getTweets();
-//    }
+    @Autowired
+    QueryRepository queryRepository;
 
     public void saveMentions(List<Resource> resources, long queryId) {
         //for each fetched tweet a new Mention is created and stored in the database
         for (Resource resource : resources) {
-            String mentionID = resource.getResourceId()+"!"+queryId;
+            String mentionID = resource.getResourceId() + "!" + queryId;
             Mention mention = new Mention.Builder()
                     .withMentionId(mentionID)
                     .withQueryId(queryId)
@@ -47,8 +46,13 @@ public class MentionService {
         }
     }
 
-    public List<Resource> findResourcesForHashTag(String hashtag) throws TwitterException {
-        Query query = new Query(hashtag);
+    public List<com.brandwatch.ivanatwitterapp.common.models.Query> readQueries() {
+
+        return queryRepository.readQueries();
+    }
+
+    public List<Resource> findResourcesForSearchQuery(String queryDefiniton) throws TwitterException {
+        Query query = new Query(queryDefiniton);
         query.setCount(100);
         QueryResult queryResult = twitter.search(query);
         return queryResult.getTweets().stream()

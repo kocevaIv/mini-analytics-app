@@ -8,35 +8,25 @@ import org.springframework.stereotype.Component;
 
 import twitter4j.TwitterException;
 
-import com.brandwatch.ivanatwitterapp.common.models.Resource;
 import com.brandwatch.ivanatwitterapp.common.models.Query;
-import com.brandwatch.ivanatwitterapp.crawler.kafka.Producer;
-import com.brandwatch.ivanatwitterapp.crawler.services.MentionService;
-import com.brandwatch.ivanatwitterapp.crawler.services.TwitterQueryService;
+import com.brandwatch.ivanatwitterapp.common.models.Resource;
+import com.brandwatch.ivanatwitterapp.crawler.services.CrawlerService;
 
 @Component
 public class CrawlerJob {
 
     @Autowired
-    private MentionService mentionService;
+    private CrawlerService crawlerService;
 
-    @Autowired
-    private TwitterQueryService twitterQueryService;
-
-    @Autowired
-    private Producer producer;
 
     //gets tweets in JSON format and saves them to a kafka topic
     @Scheduled(fixedDelay = 5000)
     public void getTweets() throws TwitterException {
-
         //loop through the saved queries
-        List<Query> twitterQueries = twitterQueryService.readQueries();
+        List<Query> twitterQueries = crawlerService.readQueries();
         for (Query query : twitterQueries) {
-          List<Resource> resources = mentionService.findResourcesForHashTag(query.getQueryDefinition());
-          //send resources to kafka topic
-          resources.forEach(producer::send);
-          mentionService.saveMentions(resources, query.getId());
+          List<Resource> resources = crawlerService.findResourcesForSearchQuery(query.getQueryDefinition());
+          crawlerService.saveMentions(resources, query.getId());
         }
     }
 }
