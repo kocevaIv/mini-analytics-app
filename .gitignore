@@ -28,4 +28,4 @@
 target
 
 ##Twitter Credentials
-/twitterpuller/src/main/resources/twitter4j.properties
+/crawler/src/main/resources/twitter4j.properties

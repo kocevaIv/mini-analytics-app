@@ -1,12 +1,14 @@
 package com.brandwatch.ivanatwitterapp.api.controllers;
 
-import com.brandwatch.ivanatwitterapp.api.exceptions.EmptyHashTagException;
-import com.brandwatch.ivanatwitterapp.api.exceptions.QueryDoesNotExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.brandwatch.ivanatwitterapp.api.exceptions.EmptyQueryDefinition;
+import com.brandwatch.ivanatwitterapp.api.exceptions.InvalidDateRangeException;
+import com.brandwatch.ivanatwitterapp.api.exceptions.QueryDoesNotExistException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -18,10 +20,17 @@ public class ApiExceptionHandler {
         return "Query id does not exist. Please enter a valid query id.";
     }
 
-    @ExceptionHandler(EmptyHashTagException.class)
+    @ExceptionHandler(EmptyQueryDefinition.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public String emptyHashTagAsInput(EmptyHashTagException e) {
+    public String emptyHashTagAsInput(EmptyQueryDefinition e) {
         return "Hashtag can not be empty!";
+    }
+
+    @ExceptionHandler(InvalidDateRangeException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public String startDateIsAfterEndDate(InvalidDateRangeException e) {
+        return "Start date must be before end date";
     }
 }

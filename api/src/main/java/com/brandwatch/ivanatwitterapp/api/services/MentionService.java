@@ -1,15 +1,17 @@
 package com.brandwatch.ivanatwitterapp.api.services;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.brandwatch.ivanatwitterapp.api.exceptions.InvalidDateRangeException;
 import com.brandwatch.ivanatwitterapp.api.exceptions.QueryDoesNotExistException;
+import com.brandwatch.ivanatwitterapp.api.utils.DateUtils;
 import com.brandwatch.ivanatwitterapp.common.models.Mention;
-import com.brandwatch.ivanatwitterapp.common.repositories.MentionRepository;
 import com.brandwatch.ivanatwitterapp.common.repositories.QueryRepository;
+import com.brandwatch.ivanatwitterapp.mentionstorage.repository.MentionRepository;
 
 @Service
 public class MentionService {
@@ -20,8 +22,15 @@ public class MentionService {
     @Autowired
     private QueryRepository queryRepository;
 
-    public List<Mention> getMentions(int limit, LocalDateTime startDate, LocalDateTime endDate) {
-        return mentionRepository.readMentions(limit, startDate, endDate);
+
+
+    public List<Mention> getMentions(Instant startDate, Instant endDate) {
+        if(DateUtils.validateRequestedDateRange(startDate,endDate)) {
+            return mentionRepository.readMentions(startDate, endDate);
+        }
+        else{
+            throw new InvalidDateRangeException();
+        }
     }
 
     public List<Mention> getMentionsByQueryId(long queryId) {
