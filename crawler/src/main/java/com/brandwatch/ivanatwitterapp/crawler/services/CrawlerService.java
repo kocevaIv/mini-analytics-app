@@ -16,6 +16,7 @@ import twitter4j.TwitterException;
 import com.brandwatch.ivanatwitterapp.common.models.Mention;
 import com.brandwatch.ivanatwitterapp.common.models.Resource;
 import com.brandwatch.ivanatwitterapp.common.repositories.QueryRepository;
+import com.brandwatch.ivanatwitterapp.crawler.kafka.Producer;
 import com.brandwatch.ivanatwitterapp.mentionstorage.repository.MentionRepository;
 
 @Service
@@ -28,7 +29,10 @@ public class CrawlerService {
     private MentionRepository mentionRepository;
 
     @Autowired
-    QueryRepository queryRepository;
+    private QueryRepository queryRepository;
+
+    @Autowired
+    private Producer producer;
 
     public void saveMentions(List<Resource> resources, long queryId) {
         //for each fetched tweet a new Mention is created and stored in the database
@@ -51,13 +55,15 @@ public class CrawlerService {
         return queryRepository.readQueries();
     }
 
-    public List<Resource> findResourcesForSearchQuery(String queryDefiniton) throws TwitterException {
+    public void findResourcesForSearchQuery(String queryDefiniton) throws TwitterException {
         Query query = new Query(queryDefiniton);
         query.setCount(100);
         QueryResult queryResult = twitter.search(query);
-        return queryResult.getTweets().stream()
+
+        List<Resource> resources = queryResult.getTweets().stream()
                 .map(this::mapTweetToResource)
                 .collect(Collectors.toList());
+        resources.forEach(producer::send);
     }
 
     public Resource mapTweetToResource(Status tweet) {

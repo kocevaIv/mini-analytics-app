@@ -18,28 +18,23 @@ import com.brandwatch.ivanatwitterapp.common.models.Resource;
 @Configuration
 public class KafkaProducerConfig {
 
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServers;
 
-   @Value("${spring.kafka.bootstrap-servers}")
-   private String bootstrapServers;
+    @Bean
+    public ProducerFactory<String, Resource> producerFactory() {
 
+        Map<String, Object> configProperties = new HashMap<>();
 
-  @Bean
-    public ProducerFactory<String, Resource> producerFactory(){
+        configProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        configProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        JsonSerializer<Resource> jsonSerializer = new JsonSerializer<>();
+        return new DefaultKafkaProducerFactory<>(configProperties, new StringSerializer(), jsonSerializer);
+    }
 
-      Map<String,Object> configProperties = new HashMap<>();
-
-      configProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServers);
-      configProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-      configProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-      JsonSerializer<Resource> jsonSerializer = new JsonSerializer<>();
-      return new DefaultKafkaProducerFactory<>(configProperties, new StringSerializer(),jsonSerializer);
-  }
-
-  @Bean
-  public KafkaTemplate<String, Resource> kafkaTemplate(){
-    return new KafkaTemplate<>(producerFactory());
-  }
-
-
-
+    @Bean
+    public KafkaTemplate<String, Resource> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
+    }
 }
