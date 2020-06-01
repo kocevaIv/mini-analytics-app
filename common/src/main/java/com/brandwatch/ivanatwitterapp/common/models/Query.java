@@ -2,7 +2,6 @@ package com.brandwatch.ivanatwitterapp.common.models;
 
 public class Query {
 
-
     private long id;
 
     private String queryDefinition;

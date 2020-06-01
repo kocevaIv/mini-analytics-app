@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {"com.brandwatch.ivanatwitterapp.api",
         "com.brandwatch.ivanatwitterapp.common",
-        "com.brandwatch.ivanatwitterapp.mentionstorage.repository"})
+        "com.brandwatch.ivanatwitterapp.mentionstorage"})
 public class ApiApplication {
 
     public static void main(String[] args) {
