@@ -1,4 +1,4 @@
-package com.brandwatch.ivanatwitterapp.crawler.kafka.config;
+package com.brandwatch.ivanatwitterapp.resourcefilterer.kafka.config;
 
 import java.util.HashMap;
 import java.util.Map;

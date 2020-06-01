@@ -1,4 +1,4 @@
-package com.brandwatch.ivanatwitterapp.crawler.kafka.config;
+package com.brandwatch.ivanatwitterapp.mentionsmatcher.kafka.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.brandwatch.ivanatwitterapp.common.models.Resource;
+import com.brandwatch.ivanatwitterapp.common.models.Mention;
 
 @Configuration
 public class KafkaProducerConfig {
@@ -22,19 +22,19 @@ public class KafkaProducerConfig {
     private String bootstrapServers;
 
     @Bean
-    public ProducerFactory<String, Resource> producerFactory() {
+    public ProducerFactory<String, Mention> producerFactory() {
 
         Map<String, Object> configProperties = new HashMap<>();
 
         configProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        JsonSerializer<Resource> jsonSerializer = new JsonSerializer<>();
+        JsonSerializer<Mention> jsonSerializer = new JsonSerializer<>();
         return new DefaultKafkaProducerFactory<>(configProperties, new StringSerializer(), jsonSerializer);
     }
 
     @Bean
-    public KafkaTemplate<String, Resource> kafkaTemplate() {
+    public KafkaTemplate<String, Mention> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }

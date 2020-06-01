@@ -14,7 +14,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.brandwatch.ivanatwitterapp.common.models.Resource;
+import com.brandwatch.ivanatwitterapp.common.models.Mention;
 
 @Configuration
 @EnableKafka
@@ -23,10 +23,10 @@ public class KafkaConsumerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    private static final String CONSUMER_GROUP_ID = "resources-group";
+    private static final String CONSUMER_GROUP_ID = "mentions-group";
 
     @Bean
-    public ConsumerFactory<String, Resource> consumerFactory() {
+    public ConsumerFactory<String, Mention> consumerFactory() {
 
         Map<String, Object> configProperties = new HashMap<>();
         configProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
@@ -36,12 +36,12 @@ public class KafkaConsumerConfig {
         configProperties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         return new DefaultKafkaConsumerFactory<>(configProperties,
                 new StringDeserializer(),
-                new JsonDeserializer<>(Resource.class));
+                new JsonDeserializer<>(Mention.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Resource> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Resource> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, Mention> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, Mention> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
