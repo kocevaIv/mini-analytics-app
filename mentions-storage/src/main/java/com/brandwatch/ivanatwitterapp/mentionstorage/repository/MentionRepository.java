@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.brandwatch.ivanatwitterapp.common.models.Mention;
 
-public interface MentionRepository extends SolrCrudRepository<Mention,String> {
-
+@Repository
+public interface MentionRepository extends SolrCrudRepository<Mention, String> {
 
     @Query("*:*")
     List<Mention> readAllMentions();
@@ -18,5 +19,4 @@ public interface MentionRepository extends SolrCrudRepository<Mention,String> {
     List<Mention> readMentions(Instant fromDate, Instant toDate);
 
     List<Mention> findMentionsByQueryId(long queryId);
-
 }
