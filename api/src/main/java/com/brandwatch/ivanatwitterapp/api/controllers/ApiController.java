@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,6 +30,8 @@ public class ApiController {
     @Autowired
     private QueryService queryService;
 
+
+    @CrossOrigin
     @GetMapping("/mentions")
     public List<Mention> getMentions(@RequestParam("startDate")
                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
@@ -41,6 +44,8 @@ public class ApiController {
         return mentionService.getMentions(parsedStartDate, parsedEndDate);
     }
 
+
+    @CrossOrigin
     @PostMapping("/queries")
     public void saveQuery(@RequestParam("definition") String definition) {
         queryService.createQuery(definition);
@@ -51,6 +56,7 @@ public class ApiController {
         return queryService.getAllQueries();
     }
 
+    @CrossOrigin
     @GetMapping(value = "/mentions/{id}")
     public List<Mention> getMentionsByQueryId(@PathVariable long id) {
         return mentionService.getMentionsByQueryId(id);
@@ -61,6 +67,7 @@ public class ApiController {
         queryService.deleteQueryById(id);
     }
 
+    @CrossOrigin
     @PatchMapping("/queries/{id}")
     public void updateQuery(@PathVariable long id, @RequestParam String definition) {
         queryService.updateQueryDefinition(id, definition);
