@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,8 @@ public class CrawlerService {
 
     @Autowired
     private Producer producer;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void saveMentions(List<Resource> resources, long queryId) {
         //for each fetched tweet a new Mention is created and stored in the database
@@ -64,6 +68,7 @@ public class CrawlerService {
                 .map(this::mapTweetToResource)
                 .collect(Collectors.toList());
         resources.forEach(producer::send);
+        resources.forEach(resource->logger.info("Crawled resource from twitter with content: {}",resource.getText()));
     }
 
     public Resource mapTweetToResource(Status tweet) {

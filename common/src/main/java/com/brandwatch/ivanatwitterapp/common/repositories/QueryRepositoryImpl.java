@@ -5,7 +5,10 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,12 +20,15 @@ import com.brandwatch.ivanatwitterapp.common.models.Query;
 @Repository
 public class QueryRepositoryImpl implements QueryRepository {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private static final String QUERIES_TABLE = "queries";
     private static final String ALL_FIELDS = " id,definition ";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final QueryRowMapper queryRowMapper;
+
 
     @Autowired
     public QueryRepositoryImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, QueryRowMapper queryRowMapper) {
@@ -52,10 +58,17 @@ public class QueryRepositoryImpl implements QueryRepository {
 
     @Override
     public Query findQueryById(long queryId) {
-        String sql = " SELECT " + ALL_FIELDS + " FROM " + QUERIES_TABLE + " WHERE "
-                + " id = :queryId ";
+        Query query = null;
+        try{
+            String sql = " SELECT " + ALL_FIELDS + " FROM " + QUERIES_TABLE + " WHERE "
+                    + " id = :queryId ";
+           query = namedParameterJdbcTemplate.queryForObject(sql, new MapSqlParameterSource("queryId", queryId), queryRowMapper);
+        }
+         catch (EmptyResultDataAccessException exception){
+             logger.info("Query with id {} does not exist...", queryId);
+         }
 
-        return namedParameterJdbcTemplate.queryForObject(sql, new MapSqlParameterSource("queryId", queryId), queryRowMapper);
+        return query;
     }
 
     @Override

@@ -26,11 +26,14 @@ public class ResourceFilterService {
     private static final String SOLR_RESOURCES_COLLECTION = "resources";
 
     public void filterResources(Resource resource) throws IOException, SolrServerException {
-        SolrQuery solrQuery = new SolrQuery();
 
-        solrQuery.set("q", "resourceId:" + resource.getResourceId());
-        QueryResponse queryResponse = client.query(SOLR_RESOURCES_COLLECTION, solrQuery);
-        SolrDocumentList solrDocumentList = queryResponse.getResults();
+        SolrDocumentList solrDocumentList = new SolrDocumentList();
+        if(!isCollectionEmpty()) {
+            SolrQuery solrQuery = new SolrQuery();
+            solrQuery.set("q", "resourceId:" + resource.getResourceId());
+            QueryResponse queryResponse = client.query(SOLR_RESOURCES_COLLECTION, solrQuery);
+            solrDocumentList = queryResponse.getResults();
+        }
         //means there is no such resource stored in the DB and we can save it to the resources collection
         //and send it to mentions-matcher
         if (solrDocumentList.isEmpty()) {
@@ -44,5 +47,15 @@ public class ResourceFilterService {
             client.commit(SOLR_RESOURCES_COLLECTION);
             uniqueResourceProducer.send(resource);
         }
+    }
+
+    private boolean isCollectionEmpty() throws IOException, SolrServerException {
+        SolrQuery q = new SolrQuery("*:*");
+        q.setRows(0);  // don't actually request any data
+        long numDocs =  client.query(SOLR_RESOURCES_COLLECTION,q).getResults().getNumFound();
+        if(numDocs == 0){
+            return true;
+        }
+        return false;
     }
 }
